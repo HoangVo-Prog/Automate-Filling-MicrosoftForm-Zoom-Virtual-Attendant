@@ -20,11 +20,14 @@ def submit_click(driver, timeout=5):
         buttons[1].click()
 
 def continue_click(driver):
-    continue_button = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((
-        By.XPATH, "//span[contains(text(), 'Tiếp')]"
-    )))
+    continue_button = WebDriverWait(driver, 5).until(
+        EC.element_to_be_clickable((
+            By.XPATH, "//span[contains(text(), 'Tiếp') or contains(text(), 'Next')]"
+        ))
+    )
     continue_button.click()
     print("Clicked Continue/Next button.")
+
     
 def safe_input_field(question, value, timeout=5):
     input_field = WebDriverWait(question, timeout).until(
