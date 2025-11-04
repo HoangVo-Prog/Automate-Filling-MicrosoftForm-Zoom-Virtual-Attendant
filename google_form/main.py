@@ -47,7 +47,7 @@ def question_click(driver, LIST_OF_VALUES, sub=0):
         
     if value is None:
         return 
-    
+    print("Newww")
     list_questions = driver.find_elements(
         By.XPATH,
         "//div[@class='RH5hzf RLS9Fe']//div[@jsmodel='CP1oW']"
