@@ -90,6 +90,8 @@ def setup_driver_linux():
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:125.0) Gecko/20100101 Firefox/125.0",
     ]
     chrome_options.add_argument(f"--user-agent={random.choice(user_agents)}")
+    chrome_options.add_argument("--lang=vi-VN")
+
 
     # Headless Mode (dạng mới để Colab không crash)
     if HEADLESS:
