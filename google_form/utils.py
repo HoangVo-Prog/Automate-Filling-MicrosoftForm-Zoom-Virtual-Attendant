@@ -58,3 +58,46 @@ def setup_driver():
         return driver
     except Exception as e:
         raise Exception(f"Failed to initialize WebDriver: {e}")
+
+
+def setup_driver_linux():
+    """
+    Initializes a Chrome WebDriver instance for Colab with undetected-chromedriver.
+    """
+    # Tạo option mới
+    chrome_options = uc.ChromeOptions()
+
+    # Tạo thư mục tạm để tránh lỗi profile conflict
+    temp_dir = tempfile.mkdtemp()
+    chrome_options.add_argument(f"--user-data-dir={temp_dir}")
+    chrome_options.add_argument(f"--data-path={temp_dir}")
+
+    # Cấu hình cơ bản
+    chrome_options.add_argument("--window-size=1920,1080")
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--disable-infobars")
+    chrome_options.add_argument("--disable-extensions")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--disable-popup-blocking")
+    chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+    chrome_options.add_argument("--lang=vi-VN")
+
+    # Random User-Agent (ẩn bot footprint)
+    user_agents = [
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.91 Safari/537.36",
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.91 Safari/537.36",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:125.0) Gecko/20100101 Firefox/125.0",
+    ]
+    chrome_options.add_argument(f"--user-agent={random.choice(user_agents)}")
+
+    # Headless Mode (dạng mới để Colab không crash)
+    if HEADLESS:
+        chrome_options.add_argument("--headless=new")
+
+    try:
+        driver = uc.Chrome(options=chrome_options, use_subprocess=True)
+        driver.set_window_size(1920, 1080)
+        return driver
+    except Exception as e:
+        raise RuntimeError(f"❌ Failed to initialize WebDriver: {e}")
