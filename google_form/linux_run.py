@@ -62,6 +62,7 @@ def question_click(driver, LIST_OF_VALUES, sub=0):
         By.XPATH,
         "//div[@class='RH5hzf RLS9Fe']//div[@jsmodel='CP1oW']"
     )
+    print("Found:", len(list_questions), "questions on the page.")
     
     for question in list_questions:
         if index >= len(LIST_OF_VALUES):
@@ -279,6 +280,7 @@ def perform_attempt(form_url: str, values: list):
         
     except Exception as e:
         print(f"Error accessing the form: {e}")
+        print(index, values[index-1])
     try:
         driver.quit()
     except Exception:
