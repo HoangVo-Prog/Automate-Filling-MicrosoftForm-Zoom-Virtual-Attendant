@@ -12,14 +12,14 @@ from selenium.common.exceptions import (
 )
 
 
-def index_increment():
+def index_increment(index):
     global index  # Declare the global index variable
     index += 1
 
 
 def continue_click():
     continue_button = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((
-        By.XPATH, '//button[@aria-label="Tiếp theo"]'
+        By.XPATH, '//button[@aria-label="Next"]'
     )))
     continue_button.click()
 
@@ -46,7 +46,7 @@ def question_click(sub=0):
 
                 time.sleep(random.uniform(0.1, 0.6))
                 question_input.click()
-                index_increment()
+                index_increment(index)
 
             except NoSuchElementException:
                 try:
@@ -56,7 +56,7 @@ def question_click(sub=0):
                         './/textarea[@aria-label="Văn bản Nhiều Dòng"]'
                     )
                     text.send_keys(LIST_OF_VALUES[index])
-                    index_increment()
+                    index_increment(index)
                 except NoSuchElementException:
                     continue
 
@@ -69,7 +69,7 @@ def question_click(sub=0):
                 )
                 time.sleep(random.uniform(0.1, 0.6))
                 question_input.click()
-            index_increment()
+            index_increment(index)
 
         else:
             try:
@@ -83,9 +83,8 @@ def question_click(sub=0):
                     sub -= 1
                     continue
                 step -= 1
-                time.sleep(random.uniform(0.1, 0.6))
                 question_input.click()
-                index_increment()
+                index_increment(index)
 
             except (TimeoutException, NoSuchElementException):
                 try:
@@ -94,9 +93,8 @@ def question_click(sub=0):
                         By.XPATH,
                         f'.//div[@aria-label="{LIST_OF_VALUES[index]}"]'
                     )
-                    time.sleep(random.uniform(0.1, 0.6))
                     question_input.click()
-                    index_increment()
+                    index_increment(index)
                 except (TimeoutException, NoSuchElementException):
                     continue
 
@@ -114,7 +112,7 @@ if __name__ == "__main__":
     for _ in range(1):
         driver = setup_driver()
 
-        form_url = rf"https://forms.office.com/Pages/ResponsePage.aspx?id=BOWTnON4o0K-xYRwPXJ2xZvVSlqE2ppIpIEL7o0BdbFUQ0VZWUlTUTlaMlhKSVhFUEFKQlBaU1ZJNi4u"
+        form_url = "https://docs.google.com/forms/d/e/1FAIpQLSfaSj7Eqtt36QmzL6UDdQUhoNBeLcACPoRpsKJt6_Ow-gccsw/viewform?usp=publish-editor"
         driver.get(form_url)
 
         index = 0
@@ -122,45 +120,45 @@ if __name__ == "__main__":
         LIST_OF_VALUES = get_answers(n)
         print(LIST_OF_VALUES)
 
-        start_button = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((
-            By.XPATH, '//*[@id="form-main-content1"]/div/div[3]/div[3]/button'
-        )))
+        # start_button = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((
+        #     By.XPATH, '//*[@id="form-main-content1"]/div/div[3]/div[3]/button'
+        # )))
 
-        start_button.click()
-        continue_click()
+        # start_button.click()
+        # continue_click()
 
-        #  Part 1 - Question: 1-4
-        question_click()
+        # #  Part 1 - Question: 1-4
+        # question_click()
 
-        # Part 2
-        continue_click()
+        # # Part 2
+        # continue_click()
 
-        # Question 5
-        question_click()
-        if n == 4:
+        # # Question 5
+        # question_click()
+        # if n == 4:
 
-            # Question 6-10
-            question_click()
+        #     # Question 6-10
+        #     question_click()
 
-            # Part 3 - Question: 11-13
-            question_click(1)
+        #     # Part 3 - Question: 11-13
+        #     question_click(1)
 
-            # Part 4 - Question 14
-            question_click()
-            #
-            # Question 15 - 16 (YES)
-            question_click()
-            #
-            # # Question 17
-            question_click()
+        #     # Part 4 - Question 14
+        #     question_click()
+        #     #
+        #     # Question 15 - 16 (YES)
+        #     question_click()
+        #     #
+        #     # # Question 17
+        #     question_click()
 
-        else:
-            question_click()
-            question_click()
+        # else:
+        #     question_click()
+        #     question_click()
 
-        time.sleep(random.uniform(180, 200))
+        # time.sleep(random.uniform(180, 200))
 
-        question_click()
+        # question_click()
 
         driver.quit()
 

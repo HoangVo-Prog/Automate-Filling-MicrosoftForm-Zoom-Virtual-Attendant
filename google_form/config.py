@@ -27,10 +27,10 @@ def get_items(n):
         ]    
     
     elif n == 41:
-        return ["Có"]
+        return ["Bosch"]
     
     elif n == 42:
-        return ["Không"]
+        return ["Logistics Inbond"]
 
 def get_weights(n):
     if n == 1:
@@ -69,4 +69,7 @@ def get_all_answers(num_questions=42):
         answers[2] = None
     return answers
         
+def get_all_questions(src):
+    pass
+
     
